@@ -27,7 +27,9 @@ const SetupFlow = (): JSX.Element => {
     const [api, contextHolder] = notification.useNotification();
 
     const handleToolSelection = (toolId: number) => {
-        setSelectedTools([...selectedTools, toolId]);
+        if(!selectedTools.includes(toolId)) {
+            setSelectedTools([...selectedTools, toolId]);
+        }
         setShowToolList(false);
         setSearchTerm('')
     };
@@ -36,7 +38,7 @@ const SetupFlow = (): JSX.Element => {
         const value = e.target.value.toLowerCase();
         setSearchTerm(value);
         setShowToolList(value.length > 0);
-        setSearchToolOptions(toolOptions.filter((tool) => tool.name.toLowerCase().includes(value)));
+        setSearchToolOptions(toolOptions.filter((tool) => tool.name.toLowerCase().startsWith(value)));
     };
 
     const handleNextClick = async () => {
